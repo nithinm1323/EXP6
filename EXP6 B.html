@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GST Calculator</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #eafcff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      width: 350px;
+      background: #d7f7f9;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    h2 {
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+    input, select {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    #result {
+      margin-top: 15px;
+      font-size: 16px;
+      color: #333;
+    }
+    button {
+      background: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 15px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>GST Calculator</h2>
+    <label>Amount:</label><br>
+    <input type="number" id="amount" placeholder="Enter Amount"><br>
+
+    <label>GST (%):</label><br>
+    <select id="gstRate">
+      <option value="0">Select GST</option>
+      <option value="3">3%</option>
+      <option value="5">5%</option>
+      <option value="12">12%</option>
+      <option value="18">18%</option>
+      <option value="28">28%</option>
+    </select>
+
+    <div id="result"></div>
+
+    <button id="reset">Reset</button>
+  </div>
+
+  <script>
+    $(document).ready(function(){
+      $("#gstRate, #amount").on("input change", function(){
+        let amount = parseFloat($("#amount").val());
+        let rate = parseFloat($("#gstRate").val());
+
+        if(amount > 0 && rate > 0){
+          let gstAmount = (amount * rate) / 100;
+          let total = amount + gstAmount;
+
+          $("#result").html(
+            "Actual Amount: " + amount.toFixed(2) + "<br>" +
+            "GST: " + gstAmount.toFixed(2) + "<br>" +
+            "Total: " + total.toFixed(2)
+          );
+        } else {
+          $("#result").html("");
+        }
+      });
+
+      $("#reset").click(function(){
+        $("#amount").val("");
+        $("#gstRate").val("0");
+        $("#result").html("");
+      });
+    });
+  </script>
+</body>
+</html>
